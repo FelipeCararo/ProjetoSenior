@@ -78,28 +78,34 @@
 
             let sCodigos = JSON.stringify(aCodigos);
 
-            $.ajax({
-                    url:  'produtos/insereVenda',
-                    type: 'GET',
-                    data: {
-                        sCodigo:      sCodigos,
-                        iNumeroVenda: iNumeroVenda
-                    },
-                success: function(iRetorno){
-                    if(iRetorno){
-                        atualizaVendaAtual(iRetorno);
-                        limpaCampoProduto();
-                        limpaListaProduto();
-                        sMensagem = '<div style="cursor:pointer;" class="alert alert-success" role="alert">Venda realizada com sucesso.</div>';
-                        addMensagem(sMensagem);
-                    }
-                    else {
-                        limpaCampoProduto();
-                        limpaListaProduto();
-                        sMensagem = "<div style='cursor:pointer;' class='alert alert-danger' role='alert'>Erro ao efetuar venda.</div>";
-                        addMensagem(sMensagem);
-                    }
-            }});
+            if(aCodigos != ''){
+                $.ajax({
+                        url:  'produtos/insereVenda',
+                        type: 'GET',
+                        data: {
+                            sCodigo:      sCodigos,
+                            iNumeroVenda: iNumeroVenda
+                        },
+                    success: function(iRetorno){
+                        if(iRetorno){
+                            atualizaVendaAtual(iRetorno);
+                            limpaCampoProduto();
+                            limpaListaProduto();
+                            sMensagem = '<div style="cursor:pointer;" class="alert alert-success" role="alert">Venda realizada com sucesso.</div>';
+                            addMensagem(sMensagem);
+                        }
+                        else {
+                            limpaCampoProduto();
+                            limpaListaProduto();
+                            sMensagem = "<div style='cursor:pointer;' class='alert alert-danger' role='alert'>Erro ao efetuar venda.</div>";
+                            addMensagem(sMensagem);
+                        }
+                }});
+            }
+            else {
+                sMensagem = "<div style='width:400px; cursor:pointer;' class='alert alert-danger' role='alert'>O campo Produto está em branco.</div>";
+                $("#mensagem").html(sMensagem);
+            }
 
         }
 
